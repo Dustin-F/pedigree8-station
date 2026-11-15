@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B83B7FA7-85E9-42A0-B58D-D16F26C36AB0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pedigree8.Core", "src\Pedigree8.Core\Pedigree8.Core.csproj", "{9D834246-8642-4C95-87F9-8CB84DAA5DC1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pedigree8.Station", "src\Pedigree8.Station\Pedigree8.Station.csproj", "{E9583C7C-471B-411C-9F0B-90F08027A46E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{5FE99950-93D8-4FC3-830C-D45C70195919}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pedigree8.Core.Tests", "tests\Pedigree8.Core.Tests\Pedigree8.Core.Tests.csproj", "{34A76943-4F65-462A-84FA-71F41F45265C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{3EB8DCED-6772-48EB-903C-B745A87DF9B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pedigree8.Migrate", "tools\Pedigree8.Migrate\Pedigree8.Migrate.csproj", "{E0D96168-95B3-4557-95BA-1F2D2502579B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9D834246-8642-4C95-87F9-8CB84DAA5DC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D834246-8642-4C95-87F9-8CB84DAA5DC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D834246-8642-4C95-87F9-8CB84DAA5DC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D834246-8642-4C95-87F9-8CB84DAA5DC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9583C7C-471B-411C-9F0B-90F08027A46E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9583C7C-471B-411C-9F0B-90F08027A46E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9583C7C-471B-411C-9F0B-90F08027A46E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9583C7C-471B-411C-9F0B-90F08027A46E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34A76943-4F65-462A-84FA-71F41F45265C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34A76943-4F65-462A-84FA-71F41F45265C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34A76943-4F65-462A-84FA-71F41F45265C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34A76943-4F65-462A-84FA-71F41F45265C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0D96168-95B3-4557-95BA-1F2D2502579B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0D96168-95B3-4557-95BA-1F2D2502579B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0D96168-95B3-4557-95BA-1F2D2502579B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0D96168-95B3-4557-95BA-1F2D2502579B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9D834246-8642-4C95-87F9-8CB84DAA5DC1} = {B83B7FA7-85E9-42A0-B58D-D16F26C36AB0}
+		{E9583C7C-471B-411C-9F0B-90F08027A46E} = {B83B7FA7-85E9-42A0-B58D-D16F26C36AB0}
+		{34A76943-4F65-462A-84FA-71F41F45265C} = {5FE99950-93D8-4FC3-830C-D45C70195919}
+		{E0D96168-95B3-4557-95BA-1F2D2502579B} = {3EB8DCED-6772-48EB-903C-B745A87DF9B9}
+	EndGlobalSection
+EndGlobal

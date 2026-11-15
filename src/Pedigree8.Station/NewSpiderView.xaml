@@ -1,0 +1,61 @@
+<UserControl x:Class="Pedigree8.Station.NewSpiderView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.Resources>
+        <Style x:Key="Heading" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Foreground" Value="{StaticResource Muted}" />
+            <Setter Property="Margin" Value="8,14,0,2" />
+        </Style>
+        <Style x:Key="Field" TargetType="TextBox">
+            <Setter Property="FontSize" Value="22" />
+            <Setter Property="Padding" Value="10,6" />
+            <Setter Property="Margin" Value="6,0" />
+            <Setter Property="Background" Value="{StaticResource Bg}" />
+            <Setter Property="Foreground" Value="{StaticResource Ink}" />
+            <Setter Property="CaretBrush" Value="{StaticResource Ink}" />
+            <Setter Property="BorderBrush" Value="{StaticResource Line}" />
+        </Style>
+    </UserControl.Resources>
+    <DockPanel>
+        <Grid DockPanel.Dock="Top" Background="{StaticResource Surface}" Height="84">
+            <StackPanel Orientation="Horizontal">
+                <Button Style="{StaticResource FlatButton}" Content="‹  Cancel" MinWidth="130" Click="Cancel_Click" />
+                <TextBlock Text="New spider" FontSize="26" FontWeight="SemiBold" VerticalAlignment="Center" Margin="12,0" />
+            </StackPanel>
+            <Button Style="{StaticResource FlatButton}" Background="{StaticResource Green}" Foreground="#0D1117"
+                    Content="Save spider" HorizontalAlignment="Right" Margin="12" Click="Save_Click" />
+        </Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Hidden" PanningMode="VerticalOnly" Padding="12,0,12,12">
+            <StackPanel>
+                <TextBlock Text="Bloodline" Style="{StaticResource Heading}" />
+                <WrapPanel x:Name="LineChips" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock Text="Code" Style="{StaticResource Heading}" />
+                        <TextBox x:Name="CodeBox" Style="{StaticResource Field}" CharacterCasing="Upper" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Text="Name (optional)" Style="{StaticResource Heading}" />
+                        <TextBox x:Name="NameBox" Style="{StaticResource Field}" />
+                    </StackPanel>
+                </Grid>
+                <TextBlock x:Name="SpeciesHeading" Text="Species" Style="{StaticResource Heading}" />
+                <WrapPanel x:Name="SpeciesChips" />
+                <TextBlock Text="Morph" Style="{StaticResource Heading}" />
+                <WrapPanel x:Name="MorphChips" />
+                <TextBlock Text="Instar" Style="{StaticResource Heading}" />
+                <WrapPanel x:Name="StageChips" />
+                <TextBlock Text="Sex" Style="{StaticResource Heading}" />
+                <WrapPanel x:Name="SexChips" />
+                <TextBlock Text="Enclosure" Style="{StaticResource Heading}" />
+                <WrapPanel x:Name="EnclosureChips" />
+                <TextBlock x:Name="ErrorText" Foreground="{StaticResource Red}" FontSize="18" Margin="8,12" />
+            </StackPanel>
+        </ScrollViewer>
+    </DockPanel>
+</UserControl>

@@ -1,0 +1,42 @@
+PEDIGREE8 STATION — TABLET SETUP
+================================
+
+1. BEFORE INSTALLING (one time)
+   - Settings > Update & Security > Activation: if it says "Windows 10 in S mode",
+     switch out of S mode (free). S mode blocks this app.
+   - Settings > Update & Security > Windows Update: install all updates, then restart.
+   - Settings > System > Storage: make sure at least 1 GB is free.
+
+2. INSTALL
+   - Copy this whole folder from the USB stick to the tablet (e.g. to Downloads).
+   - Double-click  install.bat
+   - The app opens full screen with your spiders already in it.
+   - If Windows shows "Windows protected your PC": tap "More info" > "Run anyway".
+
+3. CAMERA (for scanning labels)
+   - Settings > Privacy > Camera: turn ON "Allow apps to access your camera"
+     and "Allow desktop apps to access your camera".
+
+4. MAKE IT A STATION (recommended)
+   - Start automatically without a password:
+       press Windows+R, type  netplwiz  , press Enter, untick
+       "Users must enter a user name and password", OK.
+   - Screen and sleep: Settings > System > Power & sleep:
+       "When plugged in, turn off after" = 10 or 15 minutes, "Sleep" = Never.
+   - Windows Update restarts: Settings > Update & Security > Windows Update >
+       Change active hours = the hours you use the station.
+
+5. EVERYDAY USE
+   - Leaving full screen: Backup & settings > Full screen: OFF  (or press F11 with a keyboard).
+   - Closing the app:       Backup & settings > Close the app.
+   - It restarts by itself when the tablet is switched on.
+
+6. BACKUPS
+   - A backup is made automatically every day; the last 14 stay on the tablet.
+   - Once a week or so: plug in a USB stick > Backup & settings > Back up to USB.
+     Keep that stick somewhere else — it is your copy if the tablet breaks.
+   - Restore: Backup & settings > Restore a backup... (your current data is
+     saved first, so a restore can itself be undone).
+
+Your data lives in  C:\Users\<you>\AppData\Local\Pedigree8
+To uninstall (data is kept): right-click uninstall.ps1 > Run with PowerShell.

@@ -1,0 +1,108 @@
+<UserControl x:Class="Pedigree8.Station.EnclosureView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.Resources>
+        <Style x:Key="FieldLabel" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="Foreground" Value="{StaticResource Muted}" />
+            <Setter Property="Margin" Value="8,10,0,2" />
+        </Style>
+        <Style x:Key="Field" TargetType="TextBox">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Padding" Value="8,6" />
+            <Setter Property="Margin" Value="6,0" />
+            <Setter Property="MinHeight" Value="48" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="Background" Value="{StaticResource Bg}" />
+            <Setter Property="Foreground" Value="{StaticResource Ink}" />
+            <Setter Property="CaretBrush" Value="{StaticResource Ink}" />
+            <Setter Property="BorderBrush" Value="{StaticResource Line}" />
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <DockPanel>
+            <Grid DockPanel.Dock="Top" Background="{StaticResource Surface}" Height="84">
+                <StackPanel Orientation="Horizontal">
+                    <Button Style="{StaticResource FlatButton}" Content="‹  Back" MinWidth="130" Click="Back_Click" />
+                    <StackPanel VerticalAlignment="Center" Margin="12,0">
+                        <TextBlock x:Name="TitleText" FontSize="26" FontWeight="SemiBold" />
+                        <TextBlock x:Name="SubtitleText" Foreground="{StaticResource Muted}" FontSize="16" />
+                    </StackPanel>
+                </StackPanel>
+                <Button x:Name="SaveButton" Style="{StaticResource FlatButton}" Background="{StaticResource Green}" Foreground="#0D1117"
+                        Content="Save changes" HorizontalAlignment="Right" Margin="12" Click="Save_Click" />
+            </Grid>
+
+            <Grid Margin="12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="320" />
+                </Grid.ColumnDefinitions>
+
+                <ScrollViewer VerticalScrollBarVisibility="Hidden" PanningMode="VerticalOnly">
+                    <StackPanel>
+                        <TextBlock Text="Code" Style="{StaticResource FieldLabel}" />
+                        <TextBox x:Name="CodeBox" Style="{StaticResource Field}" CharacterCasing="Upper" />
+                        <TextBlock Text="Type" Style="{StaticResource FieldLabel}" />
+                        <TextBox x:Name="TypeBox" Style="{StaticResource Field}" />
+                        <TextBlock Text="Size" Style="{StaticResource FieldLabel}" />
+                        <TextBox x:Name="DimensionsBox" Style="{StaticResource Field}" />
+                        <TextBlock Text="Ventilation" Style="{StaticResource FieldLabel}" />
+                        <TextBox x:Name="VentilationBox" Style="{StaticResource Field}" />
+                        <TextBlock Text="Substrate" Style="{StaticResource FieldLabel}" />
+                        <TextBox x:Name="SubstrateBox" Style="{StaticResource Field}" />
+                        <TextBlock Text="Water" Style="{StaticResource FieldLabel}" />
+                        <TextBox x:Name="WaterBox" Style="{StaticResource Field}" />
+                        <TextBlock Text="Contents / decor" Style="{StaticResource FieldLabel}" />
+                        <TextBox x:Name="ContentsBox" Style="{StaticResource Field}" AcceptsReturn="True" />
+                        <TextBlock Text="Setup notes" Style="{StaticResource FieldLabel}" />
+                        <TextBox x:Name="NotesBox" Style="{StaticResource Field}" AcceptsReturn="True" MinHeight="96" />
+                        <TextBlock x:Name="ErrorText" Foreground="{StaticResource Red}" FontSize="16" Margin="8,8" />
+                    </StackPanel>
+                </ScrollViewer>
+
+                <StackPanel Grid.Column="1" Margin="12,0,0,0">
+                    <Border Background="White" CornerRadius="12" Padding="8" Width="220" Height="220">
+                        <Image x:Name="QrPreview" RenderOptions.EdgeMode="Aliased" />
+                    </Border>
+                    <Button Style="{StaticResource FlatButton}" Content="Print this label" Margin="6,12,6,6" Click="PrintOne_Click" />
+                    <TextBlock Text="Lives here" Style="{StaticResource FieldLabel}" />
+                    <TextBlock x:Name="OccupantText" FontSize="24" FontWeight="SemiBold" Margin="8,0" />
+                    <Button x:Name="OpenSpiderButton" Style="{StaticResource FlatButton}" Content="Open spider" Click="OpenSpider_Click" />
+                    <Button Style="{StaticResource FlatButton}" Content="Move a spider here" Click="PickSpider_Click" />
+                </StackPanel>
+            </Grid>
+        </DockPanel>
+
+        <Grid x:Name="PickPanel" Background="#CC000000" Visibility="Collapsed">
+            <Border Background="{StaticResource Surface}" CornerRadius="16" Padding="16" Margin="40">
+                <DockPanel>
+                    <Grid DockPanel.Dock="Top">
+                        <TextBlock Text="Which spider moves here?" FontSize="24" FontWeight="SemiBold" VerticalAlignment="Center" Margin="8,0" />
+                        <Button Style="{StaticResource FlatButton}" Content="Cancel" HorizontalAlignment="Right" Click="ClosePick_Click" />
+                    </Grid>
+                    <ScrollViewer VerticalScrollBarVisibility="Hidden" PanningMode="VerticalOnly">
+                        <ItemsControl x:Name="SpiderChoices">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="3" VerticalAlignment="Top" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Button Style="{StaticResource FlatButton}" Height="96" Tag="{Binding Id}" Click="SpiderChoice_Click">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Code}" FontSize="24" HorizontalAlignment="Center" />
+                                            <TextBlock Text="{Binding EnclosureCode, TargetNullValue='no enclosure'}" FontSize="15" FontWeight="Normal"
+                                                       Foreground="{StaticResource Muted}" HorizontalAlignment="Center" />
+                                        </StackPanel>
+                                    </Button>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </DockPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

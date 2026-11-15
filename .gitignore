@@ -1,0 +1,14 @@
+bin/
+obj/
+.vs/
+*.user
+*.db
+*.db-wal
+*.db-shm
+backups/
+artifacts/
+TestResults/
+migration-output/
+package/
+local.settings.txt
+release/
