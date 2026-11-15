@@ -8,8 +8,8 @@ $dotnet = "$env:ProgramFiles\dotnet\dotnet.exe"
 $version = ([xml](Get-Content (Join-Path $root "Directory.Build.props"))).Project.PropertyGroup.Version
 if (-not $version) { throw "No <Version> in Directory.Build.props." }
 
-gh release view "v$version" --repo $Repo *> $null
-if ($LASTEXITCODE -eq 0) { throw "Release v$version already exists. Raise the version in Directory.Build.props first." }
+$existing = (gh release list --repo $Repo --limit 200 --json tagName | ConvertFrom-Json).tagName
+if ($existing -contains "v$version") { throw "Release v$version already exists. Raise the version in Directory.Build.props first." }
 if (git -C $root status --porcelain) { throw "There are uncommitted changes. Commit and push them first." }
 
 & $dotnet test (Join-Path $root "tests\Pedigree8.Core.Tests") -c Release --nologo -v quiet
