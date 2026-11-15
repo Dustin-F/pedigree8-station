@@ -6,7 +6,7 @@
             <StackPanel Orientation="Horizontal">
                 <Button Style="{StaticResource FlatButton}" Content="‹  Cancel" MinWidth="120" Click="Cancel_Click" />
                 <StackPanel VerticalAlignment="Center" Margin="8,0">
-                    <TextBlock Text="Feed spiders" FontSize="24" FontWeight="SemiBold" />
+                    <TextBlock x:Name="TitleText" Text="Feed spiders" FontSize="24" FontWeight="SemiBold" />
                     <TextBlock Text="Tap a spider to leave it out" Foreground="{StaticResource Muted}" FontSize="15" />
                 </StackPanel>
             </StackPanel>
@@ -29,19 +29,27 @@
                             <TextBlock x:Name="DateText" FontSize="21" FontWeight="Bold" Width="150" TextAlignment="Center" VerticalAlignment="Center" />
                             <Button x:Name="DatePlus" Style="{StaticResource FlatButton}" Content="+1 day" Padding="12,0" Click="DatePlus_Click" />
                             <Button Style="{StaticResource FlatButton}" Content="Today" Padding="12,0" Click="DateToday_Click" />
-                            <TextBlock Text="Each got" FontSize="17" Foreground="{StaticResource Muted}" VerticalAlignment="Center" Margin="22,0,4,0" />
-                            <Button Style="{StaticResource FlatButton}" Content="−" Click="QuantityMinus_Click" />
-                            <TextBlock x:Name="QuantityText" FontSize="22" FontWeight="Bold" Width="44" TextAlignment="Center" VerticalAlignment="Center" />
-                            <Button Style="{StaticResource FlatButton}" Content="+" Click="QuantityPlus_Click" />
+                            <StackPanel x:Name="QuantityRow" Orientation="Horizontal">
+                                <TextBlock Text="Each got" FontSize="17" Foreground="{StaticResource Muted}" VerticalAlignment="Center" Margin="22,0,4,0" />
+                                <Button Style="{StaticResource FlatButton}" Content="−" Click="QuantityMinus_Click" />
+                                <TextBlock x:Name="QuantityText" FontSize="22" FontWeight="Bold" Width="44" TextAlignment="Center" VerticalAlignment="Center" />
+                                <Button Style="{StaticResource FlatButton}" Content="+" Click="QuantityPlus_Click" />
+                            </StackPanel>
                         </StackPanel>
-                        <TextBlock Text="How did it go?" FontSize="16" Foreground="{StaticResource Muted}" Margin="6,4,0,0" />
-                        <WrapPanel x:Name="OutcomeChips" />
-                        <TextBlock Text="Food" FontSize="16" Foreground="{StaticResource Muted}" Margin="6,4,0,0" />
-                        <WrapPanel x:Name="PreyChips" />
-                        <StackPanel x:Name="NewPreyRow" Orientation="Horizontal" Visibility="Collapsed">
-                            <TextBox x:Name="NewPreyBox" FontSize="20" Width="300" Margin="6" Padding="8,4"
-                                     Background="{StaticResource Bg}" Foreground="{StaticResource Ink}" CaretBrush="{StaticResource Ink}" BorderBrush="{StaticResource Line}" />
-                            <Button Style="{StaticResource FlatButton}" Content="Add food" Click="AddPrey_Click" />
+                        <StackPanel x:Name="FeedOptions">
+                            <TextBlock Text="How did it go?" FontSize="16" Foreground="{StaticResource Muted}" Margin="6,4,0,0" />
+                            <WrapPanel x:Name="OutcomeChips" />
+                            <TextBlock Text="Food" FontSize="16" Foreground="{StaticResource Muted}" Margin="6,4,0,0" />
+                            <WrapPanel x:Name="PreyChips" />
+                            <StackPanel x:Name="NewPreyRow" Orientation="Horizontal" Visibility="Collapsed">
+                                <TextBox x:Name="NewPreyBox" FontSize="20" Width="300" Margin="6" Padding="8,4"
+                                         Background="{StaticResource Bg}" Foreground="{StaticResource Ink}" CaretBrush="{StaticResource Ink}" BorderBrush="{StaticResource Line}" />
+                                <Button Style="{StaticResource FlatButton}" Content="Add food" Click="AddPrey_Click" />
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel x:Name="MistOptions" Visibility="Collapsed">
+                            <TextBlock Text="What did you do?" FontSize="16" Foreground="{StaticResource Muted}" Margin="6,4,0,0" />
+                            <WrapPanel x:Name="ActionChips" />
                         </StackPanel>
                     </StackPanel>
                 </Border>

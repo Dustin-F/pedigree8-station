@@ -63,29 +63,6 @@ namespace Pedigree8.Core
             return new ActionResult($"Misted · {spider.Code}", () => _events.Void(ev.Id, "Undone on station"));
         }
 
-        public ActionResult MistAll()
-        {
-            var ids = new List<string>();
-            foreach (var tile in _spiders.GetOverview())
-            {
-                ids.Add(_events.Add(new StationEvent
-                {
-                    Type = EventTypes.Hydration,
-                    SpiderId = tile.Id,
-                    EnclosureId = tile.EnclosureId,
-                    Action = "misted",
-                }).Id);
-            }
-
-            return new ActionResult($"Misted all · {ids.Count} enclosures", () =>
-            {
-                foreach (var id in ids)
-                {
-                    _events.Void(id, "Undone on station");
-                }
-            });
-        }
-
         // Logs the same feeding for several spiders at once, on the chosen date (current time of day).
         public ActionResult FeedMany(IReadOnlyCollection<string> spiderIds, string date, string outcome, string? preyTypeId, double quantity)
         {
@@ -114,6 +91,40 @@ namespace Pedigree8.Core
 
             var verb = outcome == "refused" ? "Refused food" : "Fed";
             return new ActionResult($"{verb} · {ids.Count} spider{(ids.Count == 1 ? "" : "s")}", () =>
+            {
+                foreach (var id in ids)
+                {
+                    _events.Void(id, "Undone on station");
+                }
+            });
+        }
+
+        // Logs the same misting/water entry for several spiders' enclosures on the chosen date.
+        public ActionResult MistMany(IReadOnlyCollection<string> spiderIds, string date, string action)
+        {
+            if (spiderIds.Count == 0)
+            {
+                throw new InvalidOperationException("Select at least one spider.");
+            }
+
+            if (string.CompareOrdinal(date, DbTime.Today()) > 0)
+            {
+                throw new InvalidOperationException("The date can't be in the future.");
+            }
+
+            var now = DbTime.Now();
+            var at = date == DbTime.Today() ? now : DbTime.MoveToDate(now, date);
+            var ids = spiderIds.Select(id => _events.Add(new StationEvent
+            {
+                Type = EventTypes.Hydration,
+                SpiderId = id,
+                EnclosureId = Require(id).EnclosureId,
+                OccurredOn = date,
+                OccurredAt = at,
+                Action = action,
+            }).Id).ToList();
+
+            return new ActionResult($"Misted · {ids.Count} spider{(ids.Count == 1 ? "" : "s")}", () =>
             {
                 foreach (var id in ids)
                 {

@@ -45,8 +45,7 @@ namespace Pedigree8.Station
         private void Tile_Click(object sender, RoutedEventArgs e) =>
             MainWindow.Current.ShowSpider((string)((Button)sender).Tag);
 
-        private void MistAll_Click(object sender, RoutedEventArgs e) =>
-            MainWindow.Current.Run(App.Husbandry.MistAll, Refresh);
+        private void MistAll_Click(object sender, RoutedEventArgs e) => MainWindow.Current.ShowMistAll();
 
         private void Scan_Click(object sender, RoutedEventArgs e) => MainWindow.Current.ShowScan();
 

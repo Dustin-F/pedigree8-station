@@ -14,21 +14,39 @@ namespace Pedigree8.Station
         private static readonly (string, string)[] Outcomes =
             { ("accepted", "All ate"), ("partial", "Ate some"), ("refused", "Refused"), ("unknown", "Not sure") };
 
+        private static readonly (string, string)[] MistActions =
+            { ("misted", "Misted"), ("water_added", "Water added"), ("source_refilled", "Water refilled"), ("checked_adequate", "Checked, fine") };
+
+        private readonly bool _mist;
         private readonly List<SpiderOverview> _spiders;
         private readonly HashSet<string> _selected;
         private string _date = DbTime.Today();
         private string _outcome = "accepted";
+        private string _mistAction = "misted";
         private string? _preyId;
         private int _quantity = 1;
 
-        public FeedAllView()
+        // mist = true turns this into the "Mist all" screen.
+        public FeedAllView(bool mist = false)
         {
             InitializeComponent();
+            _mist = mist;
             _spiders = new SpiderRepository(App.Db).GetOverview().ToList();
             _selected = new HashSet<string>(_spiders.Select(s => s.Id));
-            _preyId = App.Husbandry.MostRecentPreyType();
-            Chips.Fill(OutcomeChips, Outcomes, _outcome, v => _outcome = v, minWidth: 130);
-            FillPrey();
+            if (mist)
+            {
+                TitleText.Text = "Mist spiders";
+                FeedOptions.Visibility = QuantityRow.Visibility = Visibility.Collapsed;
+                MistOptions.Visibility = Visibility.Visible;
+                Chips.Fill(ActionChips, MistActions, _mistAction, v => _mistAction = v, minWidth: 150);
+            }
+            else
+            {
+                _preyId = App.Husbandry.MostRecentPreyType();
+                Chips.Fill(OutcomeChips, Outcomes, _outcome, v => _outcome = v, minWidth: 130);
+                FillPrey();
+            }
+
             Refresh();
         }
 
@@ -42,17 +60,17 @@ namespace Pedigree8.Station
                 text.Children.Add(new TextBlock { Text = (on ? "✓ " : "") + spider.Code, FontSize = 22, FontWeight = FontWeights.Bold });
                 text.Children.Add(new TextBlock
                 {
-                    Text = spider.InPremolt ? "premolt" : "fed " + spider.FedShort,
+                    Text = _mist ? "misted " + spider.MistedShort : spider.InPremolt ? "premolt" : "fed " + spider.FedShort,
                     FontSize = 15,
                     FontWeight = FontWeights.Normal,
-                    Foreground = (Brush)FindResource(on ? "Bg" : spider.InPremolt ? "Purple" : "Muted"),
+                    Foreground = (Brush)FindResource(on ? "Bg" : spider.InPremolt && !_mist ? "Purple" : "Muted"),
                 });
                 var button = new Button
                 {
                     Content = text,
                     Style = (Style)FindResource("FlatButton"),
                     Height = 70,
-                    Background = (Brush)FindResource(on ? "Green" : "Surface2"),
+                    Background = (Brush)FindResource(on ? (_mist ? "Blue" : "Green") : "Surface2"),
                     Foreground = (Brush)FindResource(on ? "Bg" : "Ink"),
                 };
                 var id = spider.Id;
@@ -68,9 +86,12 @@ namespace Pedigree8.Station
                 SpiderGrid.Children.Add(button);
             }
 
-            DateText.Text = _date == DbTime.Today() ? "Today" : DbTime.ParseDate(_date).ToString("ddd d MMM");            DatePlus.IsEnabled = string.CompareOrdinal(_date, DbTime.Today()) < 0;
+            DateText.Text = _date == DbTime.Today() ? "Today" : DbTime.ParseDate(_date).ToString("ddd d MMM");
+            DatePlus.IsEnabled = string.CompareOrdinal(_date, DbTime.Today()) < 0;
             QuantityText.Text = _quantity.ToString();
-            SaveButton.Content = _selected.Count == 0 ? "Select spiders" : $"Feed {_selected.Count} spider{(_selected.Count == 1 ? "" : "s")}";
+            var verb = _mist ? "Mist" : "Feed";
+            SaveButton.Content = _selected.Count == 0 ? "Select spiders" : $"{verb} {_selected.Count} spider{(_selected.Count == 1 ? "" : "s")}";
+            SaveButton.Background = (Brush)FindResource(_mist ? "Blue" : "Green");
             SaveButton.IsEnabled = _selected.Count > 0;
         }
 
@@ -150,8 +171,10 @@ namespace Pedigree8.Station
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             var ids = _spiders.Where(s => _selected.Contains(s.Id)).Select(s => s.Id).ToList();
-            var (date, outcome, prey, quantity) = (_date, _outcome, _preyId, (double)_quantity);
-            MainWindow.Current.Run(() => App.Husbandry.FeedMany(ids, date, outcome, prey, quantity), () => MainWindow.Current.ShowHome());
+            var (date, outcome, prey, quantity, action) = (_date, _outcome, _preyId, (double)_quantity, _mistAction);
+            MainWindow.Current.Run(
+                () => _mist ? App.Husbandry.MistMany(ids, date, action) : App.Husbandry.FeedMany(ids, date, outcome, prey, quantity),
+                () => MainWindow.Current.ShowHome());
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e) => MainWindow.Current.ShowHome();

@@ -127,16 +127,6 @@ namespace Pedigree8.Core.Tests
         }
 
         [Fact]
-        public void Mist_all_logs_one_entry_per_enclosure_and_undo_removes_all()
-        {
-            var result = _husbandry.MistAll();
-            Assert.Equal(0, Tile.DaysSinceHydrated);
-
-            result.Undo();
-            Assert.Null(Tile.LastHydratedOn);
-        }
-
-        [Fact]
         public void Death_hides_spider_from_home_and_undo_brings_it_back()
         {
             var result = _husbandry.Died(_spiderId, "Found curled up");
@@ -239,6 +229,26 @@ namespace Pedigree8.Core.Tests
 
             result.Undo();
             Assert.All(_spiders.GetOverview(), t => Assert.Null(t.LastFedOn));
+        }
+
+        [Fact]
+        public void Mist_many_logs_selected_spiders_with_action_and_date()
+        {
+            var other = new Spider { Code = "YI-02", SpeciesId = _spiders.Get(_spiderId)!.SpeciesId };
+            _spiders.Insert(other);
+            var twoDaysAgo = DbTime.ShiftDate(DbTime.Today(), -2);
+
+            var result = _husbandry.MistMany(new[] { _spiderId }, twoDaysAgo, "water_added");
+
+            var ev = new EventRepository(_db).GetForSpider(_spiderId).Single();
+            Assert.Equal("water_added", ev.Action);
+            Assert.Equal(_spiders.Get(_spiderId)!.EnclosureId, ev.EnclosureId);
+            SpiderOverview Tile(string code) => _spiders.GetOverview().Single(t => t.Code == code);
+            Assert.Equal(2, Tile("YI-01").DaysSinceHydrated);
+            Assert.Null(Tile("YI-02").LastHydratedOn);
+
+            result.Undo();
+            Assert.Null(Tile("YI-01").LastHydratedOn);
         }
 
         [Fact]

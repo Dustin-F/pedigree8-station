@@ -72,6 +72,8 @@ namespace Pedigree8.Station
 
         public void ShowFeedAll() => Host.Content = new FeedAllView();
 
+        public void ShowMistAll() => Host.Content = new FeedAllView(mist: true);
+
         protected override void OnKeyDown(KeyEventArgs e)
         {
             if (e.Key == Key.F11)
