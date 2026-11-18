@@ -17,14 +17,15 @@ PEDIGREE8 STATION — TABLET SETUP
    - Settings > Privacy > Camera: turn ON "Allow apps to access your camera"
      and "Allow desktop apps to access your camera".
 
-4. MAKE IT A STATION (recommended)
-   - Start automatically without a password:
-       press Windows+R, type  netplwiz  , press Enter, untick
-       "Users must enter a user name and password", OK.
-   - Screen and sleep: Settings > System > Power & sleep:
-       "When plugged in, turn off after" = 10 or 15 minutes, "Sleep" = Never.
-   - Windows Update restarts: Settings > Update & Security > Windows Update >
-       Change active hours = the hours you use the station.
+4. KIOSK MODE (recommended)
+   - Double-click  kiosk-mode.bat  and tap Yes when Windows asks.
+     In the "User Accounts" window: untick "Users must enter a user name and
+     password", OK, type your Windows password twice.
+   - After that, switching the tablet on opens the app by itself, full screen.
+     Plugged in, the screen turns off after 15 minutes and a tap wakes it
+     straight back into the app (no lock screen). Edge swipes are turned off
+     and Windows Update only restarts between 23:00 and 06:00.
+   - To undo: double-click  kiosk-off.bat
 
 5. EVERYDAY USE
    - Leaving full screen: Backup & settings > Full screen: OFF  (or press F11 with a keyboard).
